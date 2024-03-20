@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <label for="search">Search Term:</label>
+    <input type="text" id="search" name="search" placeholder="Enter search term">
+    <br>
+    <br>
+    <label for="contentFilter">Content Filter:</label>
+    <!-- Adding a dropdown for content filtering -->
+    <select id="contentFilter">
+        <option value="low">Low</option>
+        <option value="medium" >Medium</option>
+        <option value="high" selected>High</option>
+    </select>
+    <p id="err" class="err" style="color: red;">عييب !</p>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!-- Image previews -->
+    <img id="preview1" src="" alt="" style="width:220px;height:164px;">
+    <img id="preview2" src="" alt="" style="width:220px;height:164px;">
+    <img id="preview3" src="" alt="" style="width:220px;height:164px;">
+    <img id="preview4" src="" alt="" style="width:220px;height:164px;">
+    <img id="preview5" src="" alt="" style="width:220px;height:164px;">
+    <img id="preview6" src="" alt="" style="width:220px;height:164px;">
+    <img id="preview7" src="" alt="" style="width:220px;height:164px;">
+    <img id="preview8" src="" alt="" style="width:220px;height:164px;">
+
+    <script>
+        function httpGetAsync(theUrl, callback) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    callback(xmlHttp.responseText);
+                }
+            }
+            xmlHttp.open("GET", theUrl, true);
+            xmlHttp.send(null);
+        }
+        
+        function tenorCallback_search(responsetext) {
+            var response_objects = JSON.parse(responsetext);
+            var top_10_gifs = response_objects["results"];
+
+            for (var i = 1; i <= 8; i++) {
+                document.getElementById("preview" + i).src = top_10_gifs[i-1]["media_formats"]["nanogif"]["url"];
+            }
+        }
+        
+        function grab_data() {
+            var apikey = "AIzaSyAFeg0cB4oCIu4KQDlBMeUona-VfdljaCw"; // Ensure this is correct
+            var lmt = 8;
+            var search_term = document.getElementById('search').value || "done";
+            search_term = encodeURIComponent(search_term); // URL encode the search term
+            
+            var contentfilter = document.getElementById('contentFilter').value;
+            if (contentfilter === "low") {
+                document.getElementById('err').style.display = "block";
+            } else {
+                document.getElementById('err').style.display = "none";
+            }
+            
+            var search_url = `https://tenor.googleapis.com/v2/search?q=${search_term}&key=${apikey}&limit=${lmt}&contentfilter=${contentfilter}`;
+            
+            console.log("Request URL:", search_url); // Debugging: Log the request URL
+            
+            httpGetAsync(search_url, tenorCallback_search);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search').addEventListener('change', grab_data);
+            document.getElementById('contentFilter').addEventListener('change', grab_data);
+            
+            grab_data(); // Initial load
+        });
+        
+    </script>
+
+</body>
+</html>
