@@ -41,6 +41,18 @@
     <img class="col-6 col-md-4" id="preview6" src="" alt="">
     <img class="col-6 col-md-4" id="preview7" src="" alt="">
     <img class="col-6 col-md-4" id="preview8" src="" alt="">
+    <img class="col-6 col-md-4" id="preview9" src="" alt="">
+    <img class="col-6 col-md-4" id="preview10" src="" alt="">
+    <img class="col-6 col-md-4" id="preview11" src="" alt="">
+    <img class="col-6 col-md-4" id="preview12" src="" alt="">
+    <img class="col-6 col-md-4" id="preview13" src="" alt="">
+    <img class="col-6 col-md-4" id="preview14" src="" alt="">
+    <img class="col-6 col-md-4" id="preview15" src="" alt="">
+    <img class="col-6 col-md-4" id="preview16" src="" alt="">
+    <img class="col-6 col-md-4" id="preview17" src="" alt="">
+    <img class="col-6 col-md-4" id="preview18" src="" alt="">
+    <img class="col-6 col-md-4" id="preview19" src="" alt="">
+    <img class="col-6 col-md-4" id="preview20" src="" alt="">
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -60,14 +72,14 @@
             var response_objects = JSON.parse(responsetext);
             var top_10_gifs = response_objects["results"];
 
-            for (var i = 1; i <= 8; i++) {
+            for (var i = 1; i <= 20; i++) {
                 document.getElementById("preview" + i).src = top_10_gifs[i-1]["media_formats"]["nanogif"]["url"];
             }
         }
         
         function grab_data() {
             var apikey = "AIzaSyAFeg0cB4oCIu4KQDlBMeUona-VfdljaCw"; // Ensure this is correct
-            var lmt = 8;
+            var lmt = 20;
             var search_term = document.getElementById('search').value || "done";
             search_term = encodeURIComponent(search_term); // URL encode the search term
             
